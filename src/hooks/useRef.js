@@ -60,25 +60,45 @@ function Edit(props) {
   );
 }
 
+// function Ref() {
+//   const [text, setText] = useState("这是今天的课程");
+//   const [edit, setEdit] = useState(false);
+//   //只监听edit 发生改变
+//   useEffect(() => {
+//     console.log("状态副作用有改变");
+//   }, [edit, text]);
+//   return (
+//     <div>
+//       {Edit ? (
+//         <Edit text={text} setText={setText} setEdit={setEdit} />
+//       ) : (
+//         <Txt text={text} setEdit={setEdit} />
+//       )}
+//       {/* 页面内容<br />
+//           页面内容<br /> */}
+//       {[...".".repeat(50)].map((item, index) => {
+//         return <div key={index}>页面内容</div>;
+//       })}
+//     </div>
+//   );
+// }
 function Ref() {
-  const [text, setText] = useState("这是今天的课程");
-  const [edit, setEdit] = useState(false);
-  //只监听edit 发生改变
+  const [nub, setNub] = useState(0);
+  const prev = useRef(nub);
   useEffect(() => {
-    console.log("状态副作用有改变");
-  }, [edit, text]);
+    prev.current = nub;
+  });
   return (
     <div>
-      {Edit ? (
-        <Edit text={text} setText={setText} setEdit={setEdit} />
-      ) : (
-        <Txt text={text} setEdit={setEdit} />
-      )}
-      {/* 页面内容<br />
-          页面内容<br /> */}
-      {[...".".repeat(50)].map((item, index) => {
-        return <div key={index}>页面内容</div>;
-      })}
+      <p>当前值：{nub}</p>
+      <p>上次值：{prev.current}</p>
+      <button
+        onClick={() => {
+          setNub(nub + 1);
+        }}
+      >
+        递增
+      </button>
     </div>
   );
 }
